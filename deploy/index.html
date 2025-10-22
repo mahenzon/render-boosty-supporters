@@ -82,6 +82,21 @@
               <i class="bi bi-gear me-2"></i><span data-label="settingsTitle">Настройки</span>
             </h5>
 
+            <!-- Date Filter Subsection -->
+            <div class="mb-4">
+              <h6 class="mb-3">
+                <i class="bi bi-calendar me-2"></i>Фильтр по дате
+              </h6>
+              <div class="mb-3">
+                <label for="filter-date-input" class="form-label">
+                  <span>Дата для фильтрации активных подписок</span>
+                  <i class="bi bi-info-circle text-muted ms-1" data-bs-toggle="tooltip" title="Дата, используемая для определения активных подписок. Подписки с end_date до этой даты считаются активными."></i>
+                </label>
+                <input type="date" class="form-control" id="filter-date-input">
+                <div class="form-text">По умолчанию: сегодняшняя дата</div>
+              </div>
+            </div>
+
             <!-- HTML Page Settings Subsection -->
             <div class="mb-4">
               <h6 class="mb-3">

@@ -112,10 +112,11 @@ function parseCSV(csvText) {
 /**
  * Filters and sorts subscription data
  * @param {Array} data - Raw parsed data
+ * @param {Date} filterDate - Date to use for filtering active subscriptions (optional, defaults to today)
  * @returns {Array} Filtered and sorted active subscriptions
  */
-function filterAndSortData(data) {
-  const today = new Date();
+function filterAndSortData(data, filterDate = null) {
+  const today = filterDate || new Date();
   today.setHours(0, 0, 0, 0); // Start of today
 
   // Filter out "Follower" level and expired subscriptions
@@ -245,7 +246,9 @@ async function processFileForRes(file) {
   const parsedData = await parseCSV(csvText);
 
   // Step 4: Filter and sort data
-  const filteredData = filterAndSortData(parsedData);
+  const filterDateStr = localStorage.getItem('filterDateSetting');
+  const filterDate = filterDateStr ? new Date(filterDateStr + 'T00:00:00') : null;
+  const filteredData = filterAndSortData(parsedData, filterDate);
 
   // Step 5: Group data
   const groupedData = groupData(filteredData);

@@ -8,6 +8,7 @@ class UIManager {
     this.paddingValue = 0;
     this.animationDurationValue = 30;
     this.titleValue = 'Спасибо!';
+    this.filterDateValue = null;
     this.init();
   }
 
@@ -84,6 +85,12 @@ class UIManager {
     const titleInput = document.getElementById('title-input');
     titleInput.addEventListener('input', (e) => {
       this.handleTitleChange(e.target.value);
+    });
+
+    // Filter date input
+    const filterDateInput = document.getElementById('filter-date-input');
+    filterDateInput.addEventListener('change', (e) => {
+      this.handleFilterDateChange(e.target.value);
     });
   }
 
@@ -350,12 +357,17 @@ class UIManager {
     const savedTitle = localStorage.getItem('titleSetting');
     this.titleValue = savedTitle || 'Спасибо!';
     document.getElementById('title-input').value = this.titleValue;
+
+    // Always reset filter date to current date on page load
+    this.filterDateValue = this.getTodayDateString();
+    document.getElementById('filter-date-input').value = this.filterDateValue;
   }
 
   saveSettings() {
     localStorage.setItem('paddingSetting', this.paddingValue.toString());
     localStorage.setItem('animationDurationSetting', this.animationDurationValue.toString());
     localStorage.setItem('titleSetting', this.titleValue);
+    // Don't save filter date to localStorage - always reset to current date on page load
   }
 
   async handlePaddingChange(value) {
@@ -392,6 +404,24 @@ class UIManager {
     if (this.processingResults && this.currentFile) {
       await this.reRenderFiles();
     }
+  }
+
+  async handleFilterDateChange(value) {
+    this.filterDateValue = value || this.getTodayDateString();
+    this.saveSettings();
+
+    // Re-render if we have results
+    if (this.processingResults && this.currentFile) {
+      await this.reRenderFiles();
+    }
+  }
+
+  getTodayDateString() {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
   }
 
   async reRenderFiles() {
