@@ -16,6 +16,7 @@ class UIManager {
     this.bindEvents();
     this.loadSettings();
     this.resetInterface();
+    this.initializeTooltips();
   }
 
   bindEvents() {
@@ -473,6 +474,14 @@ class UIManager {
 
     // Clear file cards
     document.getElementById('file-cards').innerHTML = '';
+  }
+
+  initializeTooltips() {
+    // Initialize Bootstrap tooltips
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
   }
 }
 
