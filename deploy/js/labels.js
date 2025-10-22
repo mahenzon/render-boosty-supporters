@@ -22,8 +22,6 @@ const labels = {
   // Settings section
   settingsTitle: "Настройки",
   paddingLinesLabel: "Строки отступа",
-  paddingLinesTooltip: "Количество пустых строк, добавляемых до и после списка поддерживающих в HTML выводе. Это контролирует расстояние в прокручивающихся титрах.",
-  paddingDefaultText: "По умолчанию: 0 (без отступа). Более высокие значения добавляют больше места до и после содержимого на HTML странице.",
 
   // Results section
   generatedFilesTitle: "Сгенерированные файлы",
