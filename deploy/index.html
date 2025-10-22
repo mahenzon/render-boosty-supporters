@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Boosty Supporters Generator</title>
+  <title data-label="pageTitle">Генератор Списка Поддерживающих на Boosty</title>
 
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -15,6 +15,8 @@
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
 
+   <!-- Application Labels -->
+   <script src="js/labels.js"></script>
   <!-- Application Styles -->
   <link rel="stylesheet" href="css/styles.css">
 </head>
@@ -23,8 +25,8 @@
     <!-- Header -->
     <div class="row mb-4">
       <div class="col-12 text-center">
-        <h1 class="display-5 fw-bold text-primary mb-2">Boosty Supporters Generator</h1>
-        <p class="lead text-muted">Upload CSV and generate supporter lists</p>
+        <h1 class="display-5 fw-bold text-primary mb-2" data-label="mainHeading">Генератор Списка Поддерживающих на Boosty</h1>
+        <p class="lead text-muted" data-label="description">Загрузите CSV и сгенерируйте списки поддерживающих</p>
       </div>
     </div>
 
@@ -34,10 +36,10 @@
         <div id="dropzone" class="dropzone p-5 text-center border border-2 border-dashed rounded">
           <div id="dropzone-content">
             <i class="bi bi-file-earmark-arrow-up display-1 text-muted mb-3"></i>
-            <h4 class="mb-3">Drag & Drop CSV File Here</h4>
-            <p class="text-muted mb-3">or</p>
+            <h4 class="mb-3" data-label="dragDropText">Перетащите CSV файл сюда</h4>
+            <p class="text-muted mb-3" data-label="orText">или</p>
             <button id="file-input-btn" class="btn btn-primary btn-lg">
-              <i class="bi bi-folder2-open me-2"></i>Choose File
+              <i class="bi bi-folder2-open me-2"></i><span data-label="chooseFileButton">Выбрать файл</span>
             </button>
             <input type="file" id="file-input" accept=".csv" class="d-none">
           </div>
@@ -46,7 +48,7 @@
             <h5 id="file-name"></h5>
             <p class="text-muted mb-3" id="file-size"></p>
             <button id="process-btn" class="btn btn-success btn-lg">
-              <i class="bi bi-play-circle me-2"></i>Process File
+              <i class="bi bi-play-circle me-2"></i><span data-label="processFileButton">Обработать файл</span>
             </button>
           </div>
         </div>
@@ -59,9 +61,9 @@
         <div class="card">
           <div class="card-body text-center">
             <div class="spinner-border text-primary mb-3" role="status">
-              <span class="visually-hidden">Processing...</span>
+              <span class="visually-hidden" data-label="processing">Обработка...</span>
             </div>
-            <h5 id="status-text">Processing CSV file...</h5>
+            <h5 id="status-text" data-label="processingCsvFile">Обработка CSV файла...</h5>
             <div class="progress mt-3">
               <div id="progress-bar" class="progress-bar progress-bar-striped progress-bar-animated"
                    role="progressbar" style="width: 0%"></div>
@@ -77,15 +79,15 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">
-              <i class="bi bi-gear me-2"></i>Settings
+              <i class="bi bi-gear me-2"></i><span data-label="settingsTitle">Настройки</span>
             </h5>
             <div class="mb-3">
               <label for="padding-input" class="form-label">
-                Padding Lines
-                <i class="bi bi-info-circle text-muted ms-1" data-bs-toggle="tooltip" title="Number of empty lines added before and after the supporters list in the HTML output. This controls the spacing in the scrolling credits."></i>
+                <span data-label="paddingLinesLabel">Строки отступа</span>
+                <i class="bi bi-info-circle text-muted ms-1" data-bs-toggle="tooltip" data-label="paddingLinesTooltip" title="Количество пустых строк, добавляемых до и после списка поддерживающих в HTML выводе. Это контролирует расстояние в прокручивающихся титрах."></i>
               </label>
               <input type="number" class="form-control" id="padding-input" min="0" max="200" step="1" placeholder="0">
-              <div class="form-text">Default: 0 (no padding). Higher values add more space before and after the content on the HTML page.</div>
+              <div class="form-text" data-label="paddingDefaultText">По умолчанию: 0 (без отступа). Более высокие значения добавляют больше места до и после содержимого на HTML странице.</div>
             </div>
           </div>
         </div>
@@ -95,13 +97,13 @@
     <!-- Results Section -->
     <div id="results-section" class="row d-none">
       <div class="col-12">
-        <h3 class="text-center mb-4">Generated Files</h3>
+        <h3 class="text-center mb-4" data-label="generatedFilesTitle">Сгенерированные файлы</h3>
         <div class="row g-4" id="file-cards">
           <!-- File cards will be inserted here -->
         </div>
         <div class="text-center mt-4">
           <button id="download-all-btn" class="btn btn-primary btn-lg">
-            <i class="bi bi-download me-2"></i>Download All as ZIP
+            <i class="bi bi-download me-2"></i><span data-label="downloadAllAsZip">Скачать все как ZIP</span>
           </button>
         </div>
       </div>
@@ -115,7 +117,7 @@
     <!-- Footer -->
     <div class="row mt-5">
       <div class="col-12 text-center">
-        <p class="text-muted">Author: Suren Khorenyan | <a href="https://github.com/mahenzon/render-boosty-supporters" target="_blank">Source Code on GitHub</a></p>
+        <p class="text-muted"><span data-label="authorText">Автор: Сурен Хоренян | </span><a href="https://github.com/mahenzon/render-boosty-supporters" target="_blank"><span data-label="sourceCodeText">Исходный код на GitHub</span></a></p>
       </div>
     </div>
   </div>

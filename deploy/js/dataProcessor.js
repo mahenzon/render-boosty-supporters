@@ -23,15 +23,15 @@ nunjucks.configure({
  */
 function validateFile(file) {
   if (!file) {
-    throw new Error('No file selected');
+    throw new Error('Файл не выбран');
   }
 
   if (!file.name.toLowerCase().endsWith('.csv')) {
-    throw new Error('Please select a CSV file');
+    throw new Error('Пожалуйста, выберите CSV файл');
   }
 
   if (file.size > CONFIG.MAX_FILE_SIZE) {
-    throw new Error('File is too large. Maximum size is 10MB');
+    throw new Error('Файл слишком большой. Максимальный размер 10MB');
   }
 }
 
@@ -49,7 +49,7 @@ function readFileContent(file) {
     };
 
     reader.onerror = () => {
-      reject(new Error('Failed to read file'));
+      reject(new Error('Не удалось прочитать файл'));
     };
 
     reader.readAsText(file, 'utf-8');
@@ -86,7 +86,7 @@ function parseCSV(csvText) {
         try {
           if (results.errors.length > 0) {
             const errorMessages = results.errors.map(e => e.message).join('; ');
-            throw new Error(`CSV parsing errors: ${errorMessages}`);
+            throw new Error(`Ошибки парсинга CSV: ${errorMessages}`);
           }
 
           // Validate required columns
@@ -94,7 +94,7 @@ function parseCSV(csvText) {
           const missingCols = CONFIG.REQUIRED_COLUMNS.filter(col => !headers.includes(col));
 
           if (missingCols.length > 0) {
-            throw new Error(`Missing required columns: ${missingCols.join(', ')}`);
+            throw new Error(`Отсутствуют обязательные столбцы: ${missingCols.join(', ')}`);
           }
 
           resolve(results.data);
@@ -103,7 +103,7 @@ function parseCSV(csvText) {
         }
       },
       error: (error) => {
-        reject(new Error(`Failed to parse CSV: ${error.message}`));
+        reject(new Error(`Не удалось распарсить CSV: ${error.message}`));
       }
     });
   });
@@ -195,7 +195,7 @@ function renderHTML(groups, padding = 50) {
     return nunjucks.renderString(templates.html, { groups, padding });
   } catch (error) {
     console.error('HTML template rendering error:', error);
-    throw new Error('Failed to render HTML template');
+    throw new Error('Не удалось рендерить HTML шаблон');
   }
 }
 
@@ -209,7 +209,7 @@ function renderTXT(groups) {
     return nunjucks.renderString(templates.txt, { groups });
   } catch (error) {
     console.error('TXT template rendering error:', error);
-    throw new Error('Failed to render TXT template');
+    throw new Error(labels.failedToRenderTxtTemplate);
   }
 }
 
@@ -223,7 +223,7 @@ function renderMD(groups) {
     return nunjucks.renderString(templates.md, { groups });
   } catch (error) {
     console.error('MD template rendering error:', error);
-    throw new Error('Failed to render MD template');
+    throw new Error(labels.failedToRenderMdTemplate);
   }
 }
 

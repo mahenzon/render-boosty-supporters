@@ -9,7 +9,7 @@ class App {
   init() {
     if (this.initialized) return;
 
-    console.log('Initializing Boosty Supporters Generator...');
+    console.log(labels.initializingApp);
 
     // Check browser compatibility
     if (!this.checkBrowserSupport()) {
@@ -23,7 +23,7 @@ class App {
     // Mark as initialized
     this.initialized = true;
 
-    console.log('App initialized successfully');
+    console.log(labels.appInitializedSuccessfully);
   }
 
   checkBrowserSupport() {
@@ -61,11 +61,11 @@ class App {
           <div class="alert alert-danger text-center">
             <h4 class="alert-heading">
               <i class="bi bi-exclamation-triangle-fill me-2"></i>
-              Browser Not Supported
+              {{ labels.browserNotSupported }}
             </h4>
-            <p>Your browser doesn't support the required features for this application.</p>
+            <p>{{ labels.browserNotSupportedMessage }}</p>
             <hr>
-            <p class="mb-0">Please use a modern browser like Chrome, Firefox, Safari, or Edge.</p>
+            <p class="mb-0">{{ labels.useModernBrowser }}</p>
           </div>
         </div>
       </div>
@@ -76,13 +76,13 @@ class App {
     // Global error handler
     window.addEventListener('error', (event) => {
       console.error('Global error:', event.error);
-      uiManager.showError('An unexpected error occurred. Please refresh and try again.');
+      uiManager.showError(labels.unexpectedError);
     });
 
     // Unhandled promise rejection handler
     window.addEventListener('unhandledrejection', (event) => {
       console.error('Unhandled promise rejection:', event.reason);
-      uiManager.showError('An unexpected error occurred. Please refresh and try again.');
+      uiManager.showError(labels.unexpectedError);
     });
 
     // Handle online/offline status
@@ -91,7 +91,7 @@ class App {
     });
 
     window.addEventListener('offline', () => {
-      uiManager.showError('You appear to be offline. Some features may not work properly.');
+      uiManager.showError(labels.youAppearToBeOffline);
     });
   }
 }

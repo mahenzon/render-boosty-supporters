@@ -106,7 +106,7 @@ class UIManager {
 
   startProcessing() {
     if (!this.currentFile) {
-      this.showError('No file selected');
+      this.showError(labels.noFileSelected);
       return;
     }
 
@@ -133,13 +133,13 @@ class UIManager {
 
     // Reset progress
     progressBar.style.width = '0%';
-    statusText.textContent = 'Processing CSV file...';
+    statusText.textContent = labels.processingCsvFile;
 
     // Show processing section
     processingSection.classList.remove('d-none');
 
     // Animate progress
-    this.animateProgress(['Parsing CSV...', 'Filtering data...', 'Generating files...']);
+    this.animateProgress([labels.parsingCsv, labels.filteringData, labels.generatingFiles]);
   }
 
   animateProgress(steps) {
@@ -172,7 +172,7 @@ class UIManager {
     this.generateFileCards(results);
 
     // Show success message
-    this.showSuccess('Files generated successfully!');
+    this.showSuccess(labels.filesGeneratedSuccessfully);
   }
 
   generateFileCards(results) {
@@ -202,11 +202,11 @@ class UIManager {
           <p class="card-text text-muted">${this.formatFileSize(new Blob([content]).size)}</p>
           <div class="d-grid gap-2">
             <button class="btn btn-outline-primary btn-sm" onclick="uiManager.downloadFile('${fileConfig.key}')">
-              <i class="bi bi-download me-1"></i>Download
+              <i class="bi bi-download me-1"></i>Скачать
             </button>
             ${fileConfig.key === 'html' ? `
               <button class="btn btn-outline-secondary btn-sm" onclick="uiManager.previewHTML()">
-                <i class="bi bi-eye me-1"></i>Preview
+                <i class="bi bi-eye me-1"></i>Предпросмотр
               </button>
             ` : ''}
           </div>
@@ -219,7 +219,7 @@ class UIManager {
 
   downloadFile(type) {
     if (!this.processingResults || !this.processingResults[type]) {
-      this.showError('No file available for download');
+      this.showError(labels.noFileAvailableForDownload);
       return;
     }
 
@@ -255,15 +255,15 @@ class UIManager {
 
       setTimeout(() => URL.revokeObjectURL(url), 100);
 
-      this.showSuccess(`${filename} downloaded successfully!`);
+      this.showSuccess(`${filename} ${labels.fileDownloadedSuccessfully}`);
     } catch (error) {
-      this.showError('Failed to download file: ' + error.message);
+      this.showError(labels.failedToDownloadFile + error.message);
     }
   }
 
   async downloadAllAsZip() {
     if (!this.processingResults) {
-      this.showError('No files available for download');
+      this.showError(labels.noFilesAvailableForDownload);
       return;
     }
 
@@ -280,13 +280,13 @@ class UIManager {
       this.downloadBlob(content, 'supporters-files.zip', 'application/zip');
 
     } catch (error) {
-      this.showError('Failed to create ZIP file: ' + error.message);
+      this.showError(labels.failedToCreateZipFile + error.message);
     }
   }
 
   previewHTML() {
     if (!this.processingResults || !this.processingResults.html) {
-      this.showError('No HTML file available for preview');
+      this.showError(labels.noHtmlFileAvailableForPreview);
       return;
     }
 
@@ -359,10 +359,10 @@ class UIManager {
       this.updateFileCards();
 
       // Show success toast
-      this.showSuccess('Files re-rendered with new padding setting!');
+      this.showSuccess(labels.filesReRenderedWithNewPadding);
 
     } catch (error) {
-      this.showError('Failed to re-render files: ' + error.message);
+      this.showError(labels.failedToReRenderFiles + error.message);
     }
   }
 
