@@ -56,6 +56,7 @@ const labels = {
   fileDownloadedSuccessfully: "успешно скачан!",
   filesReRenderedWithNewPadding: "Файлы перерендерены с новыми настройками отступа!",
   filesReRenderedWithNewSettings: "Файлы перерендерены с новыми настройками",
+  settingsResetSuccess: "Настройки сброшены к значениям по умолчанию",
 
   // Browser compatibility
   browserNotSupported: "Браузер не поддерживается",

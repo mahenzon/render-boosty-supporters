@@ -93,6 +93,12 @@ class UIManager {
     filterDateInput.addEventListener('change', (e) => {
       this.handleFilterDateChange(e.target.value);
     });
+
+    // Reset settings button
+    const resetSettingsBtn = document.getElementById('reset-settings-btn');
+    resetSettingsBtn.addEventListener('click', () => {
+      this.resetSettings();
+    });
   }
 
 
@@ -504,6 +510,32 @@ class UIManager {
         iconElement.classList.add('bi-chevron-down');
       });
     }
+  }
+
+  resetSettings() {
+    // копипаста
+    // Reset to default values
+    this.paddingValue = 0;
+    this.animationDurationValue = 30;
+    this.titleValue = 'Спасибо!';
+    this.filterDateValue = this.getTodayDateString();
+
+    // Update input fields
+    document.getElementById('padding-input').value = this.paddingValue;
+    document.getElementById('animation-duration-input').value = this.animationDurationValue;
+    document.getElementById('title-input').value = this.titleValue;
+    document.getElementById('filter-date-input').value = this.filterDateValue;
+
+    // Save to localStorage
+    this.saveSettings();
+
+    // Re-render if we have results
+    if (this.processingResults && this.currentFile) {
+      this.reRenderFiles();
+    }
+
+    // Show success message
+    this.showSuccess(labels.settingsResetSuccess);
   }
 }
 
