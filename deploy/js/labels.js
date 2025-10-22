@@ -32,7 +32,7 @@ const labels = {
   previewButton: "Предпросмотр",
 
   // Footer
-  authorText: "Автор: Suren Khorenyan | ",
+  authorText: "Автор: Сурен Хоренян | ",
   sourceCodeText: "Исходный код на GitHub",
 
   // Error messages
