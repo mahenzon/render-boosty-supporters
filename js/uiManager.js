@@ -9,6 +9,7 @@ class UIManager {
     this.animationDurationValue = 30;
     this.titleValue = 'Спасибо!';
     this.filterDateValue = null;
+    this.debouncedTitleChange = this.debounce((value) => this.handleTitleChange(value), 300);
     this.init();
   }
 
@@ -85,7 +86,7 @@ class UIManager {
     // Title input
     const titleInput = document.getElementById('title-input');
     titleInput.addEventListener('input', (e) => {
-      this.handleTitleChange(e.target.value);
+      this.debouncedTitleChange(e.target.value);
     });
 
     // Filter date input
@@ -510,6 +511,14 @@ class UIManager {
         iconElement.classList.add('bi-chevron-down');
       });
     }
+  }
+
+  debounce(func, delay) {
+    let timeoutId;
+    return function (...args) {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => func.apply(this, args), delay);
+    };
   }
 
   resetSettings() {
