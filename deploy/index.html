@@ -77,54 +77,58 @@
     <div id="settings-section" class="row mb-4">
       <div class="col-lg-6 mx-auto">
         <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">
+          <div class="card-header" data-bs-toggle="collapse" data-bs-target="#settings-content" aria-expanded="false" aria-controls="settings-content" style="cursor: pointer;">
+            <h5 class="card-title mb-0">
               <i class="bi bi-gear me-2"></i><span data-label="settingsTitle">Настройки</span>
+              <i class="bi bi-chevron-down float-end"></i>
             </h5>
+          </div>
+          <div id="settings-content" class="collapse">
+            <div class="card-body">
+              <!-- Date Filter Subsection -->
+              <div class="mb-4">
+                <h6 class="mb-3">
+                  <i class="bi bi-calendar me-2"></i>Фильтр по дате
+                </h6>
+                <div class="mb-3">
+                  <label for="filter-date-input" class="form-label">
+                    <span>Дата для фильтрации активных подписок</span>
+                    <i class="bi bi-info-circle text-muted ms-1" data-bs-toggle="tooltip" title="Дата, используемая для определения активных подписок. Подписки с end_date до этой даты считаются активными."></i>
+                  </label>
+                  <input type="date" class="form-control" id="filter-date-input">
+                  <div class="form-text">По умолчанию: сегодняшняя дата</div>
+                </div>
+              </div>
 
-            <!-- Date Filter Subsection -->
-            <div class="mb-4">
-              <h6 class="mb-3">
-                <i class="bi bi-calendar me-2"></i>Фильтр по дате
-              </h6>
-              <div class="mb-3">
-                <label for="filter-date-input" class="form-label">
-                  <span>Дата для фильтрации активных подписок</span>
-                  <i class="bi bi-info-circle text-muted ms-1" data-bs-toggle="tooltip" title="Дата, используемая для определения активных подписок. Подписки с end_date до этой даты считаются активными."></i>
-                </label>
-                <input type="date" class="form-control" id="filter-date-input">
-                <div class="form-text">По умолчанию: сегодняшняя дата</div>
-              </div>
-            </div>
-
-            <!-- HTML Page Settings Subsection -->
-            <div class="mb-4">
-              <h6 class="mb-3">
-                <i class="bi bi-filetype-html me-2"></i>Настройки HTML страницы
-              </h6>
-              <div class="mb-3">
-                <label for="title-input" class="form-label">
-                  <span>Текст заголовка</span>
-                  <i class="bi bi-info-circle text-muted ms-1" data-bs-toggle="tooltip" title="Текст, отображаемый в верхней части HTML страницы с поддерживающими."></i>
-                </label>
-                <input type="text" class="form-control" id="title-input" placeholder="Спасибо!">
-                <div class="form-text">По умолчанию: Спасибо!</div>
-              </div>
-              <div class="mb-3">
-                <label for="padding-input" class="form-label">
-                  <span data-label="paddingLinesLabel">Строки отступа</span>
-                  <i class="bi bi-info-circle text-muted ms-1" data-bs-toggle="tooltip" data-label="paddingLinesTooltip" title="Количество пустых строк, добавляемых до и после списка поддерживающих в HTML выводе. Это контролирует расстояние в прокручивающихся титрах."></i>
-                </label>
-                <input type="number" class="form-control" id="padding-input" min="0" max="200" step="1" placeholder="0">
-                <div class="form-text" data-label="paddingDefaultText">По умолчанию: 0 (без отступа). Более высокие значения добавляют больше места до и после содержимого на HTML странице.</div>
-              </div>
-              <div class="mb-3">
-                <label for="animation-duration-input" class="form-label">
-                  <span>Длительность анимации (секунды)</span>
-                  <i class="bi bi-info-circle text-muted ms-1" data-bs-toggle="tooltip" title="Длительность прокрутки титров в HTML файле."></i>
-                </label>
-                <input type="number" class="form-control" id="animation-duration-input" min="1" max="300" step="1" placeholder="30">
-                <div class="form-text">По умолчанию: 30 секунд. Диапазон: 1-300 секунд.</div>
+              <!-- HTML Page Settings Subsection -->
+              <div class="mb-4">
+                <h6 class="mb-3">
+                  <i class="bi bi-filetype-html me-2"></i>Настройки HTML страницы
+                </h6>
+                <div class="mb-3">
+                  <label for="title-input" class="form-label">
+                    <span>Текст заголовка</span>
+                    <i class="bi bi-info-circle text-muted ms-1" data-bs-toggle="tooltip" title="Текст, отображаемый в верхней части HTML страницы с поддерживающими."></i>
+                  </label>
+                  <input type="text" class="form-control" id="title-input" placeholder="Спасибо!">
+                  <div class="form-text">По умолчанию: Спасибо!</div>
+                </div>
+                <div class="mb-3">
+                  <label for="padding-input" class="form-label">
+                    <span data-label="paddingLinesLabel">Строки отступа</span>
+                    <i class="bi bi-info-circle text-muted ms-1" data-bs-toggle="tooltip" data-label="paddingLinesTooltip" title="Количество пустых строк, добавляемых до и после списка поддерживающих в HTML выводе. Это контролирует расстояние в прокручивающихся титрах."></i>
+                  </label>
+                  <input type="number" class="form-control" id="padding-input" min="0" max="200" step="1" placeholder="0">
+                  <div class="form-text" data-label="paddingDefaultText">По умолчанию: 0 (без отступа). Более высокие значения добавляют больше места до и после содержимого на HTML странице.</div>
+                </div>
+                <div class="mb-3">
+                  <label for="animation-duration-input" class="form-label">
+                    <span>Длительность анимации (секунды)</span>
+                    <i class="bi bi-info-circle text-muted ms-1" data-bs-toggle="tooltip" title="Длительность прокрутки титров в HTML файле."></i>
+                  </label>
+                  <input type="number" class="form-control" id="animation-duration-input" min="1" max="300" step="1" placeholder="30">
+                  <div class="form-text">По умолчанию: 30 секунд. Диапазон: 1-300 секунд.</div>
+                </div>
               </div>
             </div>
           </div>

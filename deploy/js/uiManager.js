@@ -482,6 +482,26 @@ class UIManager {
     const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
       return new bootstrap.Tooltip(tooltipTriggerEl);
     });
+
+    // Initialize collapse toggle icon
+    this.initializeCollapseIcon();
+  }
+
+  initializeCollapseIcon() {
+    const collapseElement = document.getElementById('settings-content');
+    const iconElement = document.querySelector('.card-header i.float-end');
+
+    if (collapseElement && iconElement) {
+      collapseElement.addEventListener('show.bs.collapse', () => {
+        iconElement.classList.remove('bi-chevron-down');
+        iconElement.classList.add('bi-chevron-up');
+      });
+
+      collapseElement.addEventListener('hide.bs.collapse', () => {
+        iconElement.classList.remove('bi-chevron-up');
+        iconElement.classList.add('bi-chevron-down');
+      });
+    }
   }
 }
 
