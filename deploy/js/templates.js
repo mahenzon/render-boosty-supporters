@@ -160,7 +160,7 @@ const templates = {
       {% endfor %}
     </div>
 
-    <div class="the-title">Спасибо!</div>
+    <div class="the-title">{{ title }}</div>
     {% for level_name, entries in groups %}
       <div class="display-title-{{ loop.index }}">{{ level_name }}</div>
       <div class="group-items-{{ loop.index }}">

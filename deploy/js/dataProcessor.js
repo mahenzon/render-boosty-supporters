@@ -193,7 +193,8 @@ function groupData(data) {
  */
 function renderHTML(groups, padding = 50, duration = 30) {
   try {
-    return nunjucks.renderString(templates.html, { groups, padding, duration });
+    const title = localStorage.getItem('titleSetting') || 'Спасибо!';
+    return nunjucks.renderString(templates.html, { groups, padding, duration, title });
   } catch (error) {
     console.error('HTML template rendering error:', error);
     throw new Error('Не удалось рендерить HTML шаблон');

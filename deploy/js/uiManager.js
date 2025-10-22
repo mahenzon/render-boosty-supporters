@@ -7,6 +7,7 @@ class UIManager {
     this.processingResults = null;
     this.paddingValue = 0;
     this.animationDurationValue = 30;
+    this.titleValue = 'Спасибо!';
     this.init();
   }
 
@@ -77,6 +78,12 @@ class UIManager {
     const animationDurationInput = document.getElementById('animation-duration-input');
     animationDurationInput.addEventListener('input', (e) => {
       this.handleAnimationDurationChange(e.target.value);
+    });
+
+    // Title input
+    const titleInput = document.getElementById('title-input');
+    titleInput.addEventListener('input', (e) => {
+      this.handleTitleChange(e.target.value);
     });
   }
 
@@ -339,11 +346,16 @@ class UIManager {
     const savedDuration = localStorage.getItem('animationDurationSetting');
     this.animationDurationValue = savedDuration ? parseInt(savedDuration) : 30;
     document.getElementById('animation-duration-input').value = this.animationDurationValue;
+
+    const savedTitle = localStorage.getItem('titleSetting');
+    this.titleValue = savedTitle || 'Спасибо!';
+    document.getElementById('title-input').value = this.titleValue;
   }
 
   saveSettings() {
     localStorage.setItem('paddingSetting', this.paddingValue.toString());
     localStorage.setItem('animationDurationSetting', this.animationDurationValue.toString());
+    localStorage.setItem('titleSetting', this.titleValue);
   }
 
   async handlePaddingChange(value) {
@@ -364,6 +376,16 @@ class UIManager {
     if (newDuration < 1 || newDuration > 300) return;
 
     this.animationDurationValue = newDuration;
+    this.saveSettings();
+
+    // Re-render if we have results
+    if (this.processingResults && this.currentFile) {
+      await this.reRenderFiles();
+    }
+  }
+
+  async handleTitleChange(value) {
+    this.titleValue = value || 'Спасибо!';
     this.saveSettings();
 
     // Re-render if we have results
