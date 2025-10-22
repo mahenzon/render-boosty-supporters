@@ -51,12 +51,13 @@ const labels = {
   noFilesAvailableForDownload: "Файлы недоступны для скачивания",
   failedToCreateZipFile: "Не удалось создать ZIP файл",
   noHtmlFileAvailableForPreview: "HTML файл недоступен для предпросмотра",
-  failedToReRenderFiles: "Не удалось перерендерить файлы",
+  failedToReRenderFiles: "Не удалось перерендерить файлы: ",
 
   // Success messages
   filesGeneratedSuccessfully: "Файлы успешно сгенерированы!",
   fileDownloadedSuccessfully: "успешно скачан!",
   filesReRenderedWithNewPadding: "Файлы перерендерены с новыми настройками отступа!",
+  filesReRenderedWithNewSettings: "Файлы перерендерены с новыми настройками",
 
   // Browser compatibility
   browserNotSupported: "Браузер не поддерживается",

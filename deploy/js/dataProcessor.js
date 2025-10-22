@@ -188,11 +188,12 @@ function groupData(data) {
  * Renders HTML template
  * @param {Array} groups - Grouped data
  * @param {number} padding - Number of padding lines before and after content
+ * @param {number} duration - Animation duration in seconds
  * @returns {string} Rendered HTML
  */
-function renderHTML(groups, padding = 50) {
+function renderHTML(groups, padding = 50, duration = 30) {
   try {
-    return nunjucks.renderString(templates.html, { groups, padding });
+    return nunjucks.renderString(templates.html, { groups, padding, duration });
   } catch (error) {
     console.error('HTML template rendering error:', error);
     throw new Error('Не удалось рендерить HTML шаблон');
@@ -232,40 +233,48 @@ function renderMD(groups) {
  * @param {File} file - Uploaded CSV file
  * @returns {Promise<Object>} Processing results
  */
+async function processFileForRes(file) {
+  // Step 1: Validate file
+  validateFile(file);
+
+  // Step 2: Read file content
+  const csvText = await readFileContent(file);
+
+  // Step 3: Parse CSV
+  const parsedData = await parseCSV(csvText);
+
+  // Step 4: Filter and sort data
+  const filteredData = filterAndSortData(parsedData);
+
+  // Step 5: Group data
+  const groupedData = groupData(filteredData);
+
+  // Step 6: Render all templates
+  const padding = parseInt(localStorage.getItem('paddingSetting')) || 0;
+  const duration = parseInt(localStorage.getItem('animationDurationSetting')) || 30;
+  return {
+    html: renderHTML(groupedData, padding, duration),
+    txt: renderTXT(groupedData),
+    md: renderMD(groupedData),
+    stats: {
+      totalRows: parsedData.length,
+      activeSubscriptions: filteredData.length,
+      groups: groupedData.length
+    }
+  };
+}
+
+/**
+ * Processes complete workflow from file to rendered outputs
+ * @param {File} file - Uploaded CSV file
+ * @returns {Promise<Object>} Processing results
+ */
 async function processFile(file) {
   try {
-    // Step 1: Validate file
-    validateFile(file);
-
-    // Step 2: Read file content
-    const csvText = await readFileContent(file);
-
-    // Step 3: Parse CSV
-    const parsedData = await parseCSV(csvText);
-
-    // Step 4: Filter and sort data
-    const filteredData = filterAndSortData(parsedData);
-
-    // Step 5: Group data
-    const groupedData = groupData(filteredData);
-
-    // Step 6: Render all templates
-    const padding = parseInt(localStorage.getItem('paddingSetting')) || 0;
-    const results = {
-      html: renderHTML(groupedData, padding),
-      txt: renderTXT(groupedData),
-      md: renderMD(groupedData),
-      stats: {
-        totalRows: parsedData.length,
-        activeSubscriptions: filteredData.length,
-        groups: groupedData.length
-      }
-    };
-
-    return results;
-
+    return await processFileForRes(file);
   } catch (error) {
     console.error('Processing error:', error);
     throw error;
   }
 }
+

@@ -6,6 +6,7 @@ class UIManager {
     this.currentFile = null;
     this.processingResults = null;
     this.paddingValue = 0;
+    this.animationDurationValue = 30;
     this.init();
   }
 
@@ -70,6 +71,12 @@ class UIManager {
     const paddingInput = document.getElementById('padding-input');
     paddingInput.addEventListener('input', (e) => {
       this.handlePaddingChange(e.target.value);
+    });
+
+    // Animation duration input
+    const animationDurationInput = document.getElementById('animation-duration-input');
+    animationDurationInput.addEventListener('input', (e) => {
+      this.handleAnimationDurationChange(e.target.value);
     });
   }
 
@@ -328,10 +335,15 @@ class UIManager {
     const savedPadding = localStorage.getItem('paddingSetting');
     this.paddingValue = savedPadding ? parseInt(savedPadding) : 0;
     document.getElementById('padding-input').value = this.paddingValue;
+
+    const savedDuration = localStorage.getItem('animationDurationSetting');
+    this.animationDurationValue = savedDuration ? parseInt(savedDuration) : 30;
+    document.getElementById('animation-duration-input').value = this.animationDurationValue;
   }
 
   saveSettings() {
     localStorage.setItem('paddingSetting', this.paddingValue.toString());
+    localStorage.setItem('animationDurationSetting', this.animationDurationValue.toString());
   }
 
   async handlePaddingChange(value) {
@@ -347,19 +359,32 @@ class UIManager {
     }
   }
 
+  async handleAnimationDurationChange(value) {
+    const newDuration = parseInt(value) || 30;
+    if (newDuration < 1 || newDuration > 300) return;
+
+    this.animationDurationValue = newDuration;
+    this.saveSettings();
+
+    // Re-render if we have results
+    if (this.processingResults && this.currentFile) {
+      await this.reRenderFiles();
+    }
+  }
+
   async reRenderFiles() {
     try {
-      // Re-process with new padding
+      // Re-process with new settings
       const results = await processFile(this.currentFile);
 
-      // Update HTML result with new padding
+      // Update HTML result with new settings
       this.processingResults.html = results.html;
 
       // Update file cards with new sizes
       this.updateFileCards();
 
       // Show success toast
-      this.showSuccess(labels.filesReRenderedWithNewPadding);
+      this.showSuccess(labels.filesReRenderedWithNewSettings);
 
     } catch (error) {
       this.showError(labels.failedToReRenderFiles + error.message);

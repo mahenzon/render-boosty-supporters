@@ -138,7 +138,7 @@ const templates = {
       bottom: 0;
       margin-left: 50px;
       position: absolute;
-      animation: scroll 50s linear forwards;
+      animation: scroll {{ duration }}s linear forwards;
     }
 
     @keyframes scroll {
