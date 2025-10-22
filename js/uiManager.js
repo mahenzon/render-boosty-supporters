@@ -439,8 +439,10 @@ class UIManager {
       // Re-process with new settings
       const results = await processFile(this.currentFile);
 
-      // Update HTML result with new settings
+      // Update all results with new settings
       this.processingResults.html = results.html;
+      this.processingResults.txt = results.txt;
+      this.processingResults.md = results.md;
 
       // Update file cards with new sizes
       this.updateFileCards();
