@@ -361,6 +361,8 @@ class UIManager {
 
     // Always reset filter date to current date on page load
     this.filterDateValue = this.getTodayDateString();
+    // проброс для дальнейшего использования при рендере (копипаста, да)
+    localStorage.setItem('filterDateSetting', this.filterDateValue);
     document.getElementById('filter-date-input').value = this.filterDateValue;
   }
 
@@ -368,7 +370,7 @@ class UIManager {
     localStorage.setItem('paddingSetting', this.paddingValue.toString());
     localStorage.setItem('animationDurationSetting', this.animationDurationValue.toString());
     localStorage.setItem('titleSetting', this.titleValue);
-    // Don't save filter date to localStorage - always reset to current date on page load
+    localStorage.setItem('filterDateSetting', this.filterDateValue);
   }
 
   async handlePaddingChange(value) {
